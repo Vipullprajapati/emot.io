@@ -1,6 +1,11 @@
 import { Card } from "@heroui/card";
+import { io } from "socket.io-client";
 import { Button } from "@heroui/button";
 import { useState } from "react";
+
+const socket = io(
+  "https://silver-space-eureka-q79g7jwrrw7vf9wqg-8000.app.github.dev/"
+);
 
 function Emote() {
   const [emoji, setEmoji] = useState("😏");
