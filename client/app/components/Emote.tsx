@@ -1,7 +1,7 @@
-import { Card } from "@heroui/card";
+import { useEffect, useState } from "react";
 import { io } from "socket.io-client";
+import { Card } from "@heroui/card";
 import { Button } from "@heroui/button";
-import { useState } from "react";
 
 const socket = io(
   "https://silver-space-eureka-q79g7jwrrw7vf9wqg-8000.app.github.dev/"
@@ -9,6 +9,12 @@ const socket = io(
 
 function Emote() {
   const [emoji, setEmoji] = useState("😏");
+
+  useEffect(() => {
+    socket.on("new_emoji", (data) => {
+      setEmoji(data);
+    });
+  }, []);
 
   return (
     <main className="min-h-screen flex items-center justify-center gap-4 flex-col">
@@ -20,12 +26,21 @@ function Emote() {
 }
 
 function ShowEmotes({ setEmoji }) {
-  const emojis = ["😀", "😁", "😂", "😎", "🙄"];
+  const emojis = ["😀", "😁", "🤣", "😂", "😎", "🙄"];
+
+  const handleBtnClick = (emoji) => {
+    setEmoji(emoji);
+    socket.emit("emoji", emoji);
+  };
 
   return (
     <div className="flex gap-2 flex-wrap justify-center">
       {emojis.map((emoji) => (
-        <Button key={emoji} variant="flat" onPress={() => setEmoji(emoji)}>
+        <Button
+          key={emoji}
+          variant="flat"
+          onPress={() => handleBtnClick(emoji)}
+        >
           <p className="text-xl">{emoji}</p>
         </Button>
       ))}
