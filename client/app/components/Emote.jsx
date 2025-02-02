@@ -3,9 +3,7 @@ import { io } from "socket.io-client";
 import { Card } from "@heroui/card";
 import { Button } from "@heroui/button";
 
-const socket = io(
-  "https://silver-space-eureka-q79g7jwrrw7vf9wqg-8000.app.github.dev/"
-);
+const socket = io("https://chilly-marlyn-vipull-3a7e5162.koyeb.app/");
 
 function Emote() {
   const [emoji, setEmoji] = useState("😏");
